@@ -1,1 +1,18 @@
-<button (click)="doLogin()" class="btn btn-primary btn-sm">Login</button>
+<div class="px-4 pt-5 my-5 text-center border-bottom">
+  <h1 class="display-4 fw-bold">Cart As a Service</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">Create and administer a "cart-service" for your e-commerce shop</p>
+    <div *ngIf="!isloggedIn()" class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+      <button (click)="doLogin()" type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Login</button>
+      <button type="button" class="btn btn-outline-secondary btn-lg px-4">Register</button>
+    </div>
+    <div *ngIf="isloggedIn()" class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+      <button routerLink="/home" type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Go To My Shop</button>
+    </div>
+  </div>
+  <div class="overflow-hidden" style="max-height: 60vh;">
+    <div class="container px-5">
+      <img src="./assets/hero_page.jpg" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" loading="lazy" width="700" height="500">
+    </div>
+  </div>
+</div>

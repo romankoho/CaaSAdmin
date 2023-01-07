@@ -14,24 +14,23 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute) { }
 
-  private returnTo: string = '';
-
-  login: any = {
-    username: '',
-    password: ''
-  };
+  private returnTo: string = "";
 
   ngOnInit(): void {
+    if(this.auth.isLoggedIn()) {
+      this.router.navigateByUrl("/home")
+    }
+
     this.route.queryParams.subscribe(params => this.returnTo = params['returnUrl'])
   }
 
   doLogin() {
-    this.auth.login()
-
-    /*
     if (this.auth.login()) {
       this.router.navigateByUrl(this.returnTo);
     }
-    */
+  }
+
+  isloggedIn():boolean {
+    return this.auth.isLoggedIn()
   }
 }

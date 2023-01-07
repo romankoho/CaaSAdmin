@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+
+body{
+  max-width: 70vw;
+  margin: auto;
+  background: #f0f0f0;
+}
+
+.light-grey{
+  background-color: #c1c1c1;
+}
+
+.small-text{
+  font-size: 0.8rem;
+}
+
+.nav-link{
+  font-weight: bold;
+}
+

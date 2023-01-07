@@ -1,0 +1,26 @@
+<wea5-navbar></wea5-navbar>
+
+<div class="bg-white rounded-3 p-3">
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Shop Name</th>
+      <th scope="col">Shop ID</th>
+      <th scope="col">Shop Key</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>{{shop.name}}</td>
+      <td>{{shop.id}}</td>
+      <td>{{shop.appKey}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+
+  <h4 class="mt-5 mb-3">Edit Shop Details</h4>
+  <wea5-shopform (shopUpdated)="updateShop()" [shop]="shop"></wea5-shopform>
+
+</div>
+

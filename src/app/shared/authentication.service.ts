@@ -18,8 +18,8 @@ export class AuthenticationService {
       this.oauthService.hasValidIdToken();
   }
 
-  userDetails(): Promise<Object> {
-    return this.oauthService.loadUserProfile()
+  logout() {
+    this.oauthService.logOut()
   }
 
 }

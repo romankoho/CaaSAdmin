@@ -8,11 +8,18 @@ import {HttpClientModule} from "@angular/common/http";
 import {NgToastModule} from "ng-angular-popup";
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { ShopformComponent } from './forms/shopform/shopform.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    NavbarComponent,
+    ShopformComponent
   ],
   imports: [
     BrowserModule,
