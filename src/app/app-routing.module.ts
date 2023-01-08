@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from "./login/login.component";
 import {HomeComponent} from "./home/home.component";
 import {CanNavigateToAdminGuard} from "./can-navigate-to-admin.guard";
-import {CartStatisticsComponent} from "./charts/cart-statistics/cart-statistics.component";
+import {OrderStatisticsComponent} from "./charts/order-statistics/order-statistics.component";
 
 const routes: Routes = [
   {
@@ -21,8 +21,8 @@ const routes: Routes = [
     canActivate: [CanNavigateToAdminGuard]
   },
   {
-    path: 'cartstatistics',
-    component: CartStatisticsComponent,
+    path: 'orderstatistics',
+    component: OrderStatisticsComponent,
     canActivate: [CanNavigateToAdminGuard]
   },
   {

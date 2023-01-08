@@ -28,6 +28,9 @@ export class ShopService {
           ...shopFromBackend
         }
         this.shop.next(updatedShop)
+
+      sessionStorage.setItem('tenantId', shopFromBackend.id);
+      sessionStorage.setItem('appKey', shopFromBackend.appKey || '')
       })
   }
 

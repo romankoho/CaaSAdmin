@@ -11,7 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ShopformComponent } from './forms/shopform/shopform.component';
-import { CartStatisticsComponent } from './charts/cart-statistics/cart-statistics.component';
+import { OrderStatisticsComponent } from './charts/order-statistics/order-statistics.component';
 import { NgChartsModule } from 'ng2-charts';
 import {RouterModule} from "@angular/router";
 import { DatepickerComponent } from './shared/datepicker/datepicker.component';
@@ -25,7 +25,7 @@ import { DatepickerModule} from "ng2-datepicker";
     HomeComponent,
     NavbarComponent,
     ShopformComponent,
-    CartStatisticsComponent,
+    OrderStatisticsComponent,
     DatepickerComponent
   ],
   imports: [
