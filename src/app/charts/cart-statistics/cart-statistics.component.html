@@ -1,8 +1,9 @@
 <wea5-navbar></wea5-navbar>
 
-<wea5-datepicker></wea5-datepicker>
-
 <div class="bg-white rounded-3 p-3">
+
+  <wea5-datepicker (dateChangedEvent)="datechangedHandler($event)"></wea5-datepicker>
+
   <div class="text-center">
     <canvas id="chartStatistics"
       baseChart type="bar">

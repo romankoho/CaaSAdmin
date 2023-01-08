@@ -36,4 +36,10 @@ export class CartStatisticsComponent implements OnInit {
     })
   }
 
+  datechangedHandler(newDate: Date) {
+    console.log(newDate)
+
+
+  }
+
 }

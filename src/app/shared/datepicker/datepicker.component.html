@@ -1,1 +1,3 @@
-<ngx-datepicker [(ngModel)]="date"></ngx-datepicker>
+<div>
+  <ngx-datepicker [(ngModel)]="date" [options]="options" (ngModelChange)="dateChangedEvent.emit(date)" ></ngx-datepicker>
+</div>
