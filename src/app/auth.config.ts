@@ -5,13 +5,13 @@ import { AuthConfig } from 'angular-oauth2-oidc';
 // siehe https://www.keycloak.org/docs/latest/securing_apps/index.html#endpoints-2
 
 export const authConfig: AuthConfig = {
-  issuer: 'http://localhost:8080/auth/realms/wea5',
-  loginUrl: 'http://localhost:8080/auth/realms/wea5/protocol/openid-connect/auth',
-  logoutUrl: 'http://localhost:8080/realms/wea5/protocol/openid-connect/logout',
-  tokenEndpoint: 'http://localhost:8080/auth/realms/wea5/protocol/openid-connect/token',
-  sessionCheckIFrameUrl: 'http://localhost:8080/auth/realms/wea5/protocol/openid-connect/login-status-iframe.html',
-  userinfoEndpoint: 'http://localhost:8080/auth/realms/wea5/protocol/openid-connect/userinfo',
-  clientId: 'wea5-demo',
+  issuer: 'http://localhost:8080/auth/realms/caas',
+  loginUrl: 'http://localhost:8080/auth/realms/caas/protocol/openid-connect/auth',
+  logoutUrl: 'http://localhost:8080/realms/caas/protocol/openid-connect/logout',
+  tokenEndpoint: 'http://localhost:8080/auth/realms/caas/protocol/openid-connect/token',
+  sessionCheckIFrameUrl: 'http://localhost:8080/auth/realms/caas/protocol/openid-connect/login-status-iframe.html',
+  userinfoEndpoint: 'http://localhost:8080/auth/realms/caas/protocol/openid-connect/userinfo',
+  clientId: 'caas',
   redirectUri: window.location.origin + '/index.html',
   silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
   scope: 'profile email',
