@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {catchError, map, Observable, of} from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, of} from "rxjs";
 import {Shop} from "../models/shop/shop";
 import {environment} from "../../environments/environment";
 import {ShopForUpdate} from "../models/shop/shopForUpdate";
@@ -12,10 +12,8 @@ export class ShopService {
 
   constructor(private http: HttpClient) { }
 
-  private errorHandler(error: Error | any): Observable<any> {
-    console.log(error);
-    return of(error);
-  }
+  private shop = new BehaviorSubject<Shop>( {id: "", cartLifetimeMinutes: 0, shopAdmin: {id:"", shopId: ""}})
+  cast = this.shop.asObservable()
 
   getByAdminId() {
     let header = new HttpHeaders({
@@ -24,8 +22,13 @@ export class ShopService {
 
     let storage = JSON.parse(sessionStorage.getItem("id_token_claims_obj") || "[]")
 
-    return this.http.get<Shop>(`${environment.server}/shopadministration/adminid/${storage['caasId']}`, {headers: header})
-      .pipe(map<any, Shop>(res => res));
+    this.http.get<Shop>(`${environment.server}/shopadministration/adminid/${storage['caasId']}`, {headers: header})
+      .pipe(map<any, Shop>(res => res)).subscribe(shopFromBackend => {
+        let updatedShop: Shop = {
+          ...shopFromBackend
+        }
+        this.shop.next(updatedShop)
+      })
   }
 
   updateShop(shopId: string, updatedShop: ShopForUpdate){
@@ -34,7 +37,14 @@ export class ShopService {
       'Content-Type': 'application/json'
     })
 
-    return this.http.put<ShopForUpdate>(`${environment.server}/shopadministration/${shopId}`, updatedShop, {headers: header})
-      .pipe(map<any, Shop>(res => res));
+    this.http.put<ShopForUpdate>(`${environment.server}/shopadministration/${shopId}`, updatedShop, {headers: header})
+      .pipe(map<any, Shop>(res => res)).subscribe(shopFromBackend => {
+          let updatedShop: Shop = {
+            ...shopFromBackend
+          }
+
+          this.shop.next(updatedShop)
+        }
+      )
   }
 }

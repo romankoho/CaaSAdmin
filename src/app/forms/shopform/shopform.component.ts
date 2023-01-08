@@ -19,15 +19,13 @@ export class ShopformComponent implements OnInit, OnChanges {
 
   editing: boolean = false
 
-  @Input() shop: Shop = {
+  shop: Shop = {
     cartLifetimeMinutes: 0, id: "",
     shopAdmin: {
       id:"",
       shopId: ""
     }
   }
-
-  @Output() shopUpdated = new EventEmitter<Shop>();
 
   ngOnChanges(changes: SimpleChanges) {
     for(const propName in changes) {
@@ -47,12 +45,13 @@ export class ShopformComponent implements OnInit, OnChanges {
               private shopService: ShopService) { }
 
   ngOnInit(): void {
-    this.initForm()
+    this.shopService.cast.subscribe(res => {
+      this.shop = res
+      this.initForm()
+    })
   }
 
   initForm(){
-    console.log(this.shop)
-
     this.shopDetailsForm = this.fb.group({
       name: [{value: this.shop.name, disabled: true}, Validators.required],
       cartLifetime: [{value: this.shop.cartLifetimeMinutes, disabled:true}, [Validators.required, Validators.min(60), Validators.max(9999)]],
@@ -106,12 +105,7 @@ export class ShopformComponent implements OnInit, OnChanges {
       concurrencyToken: this.shop.concurrencyToken,
     }
 
-    this.shopService.updateShop(this.shop.id, shopForUpdate).subscribe(res => {
-      this.shop = res
-      this.editing = false
-      this.shopUpdated.emit(this.shop)
-    })
+    this.shopService.updateShop(this.shop.id, shopForUpdate)
+    this.editing = false
   }
-
-
 }

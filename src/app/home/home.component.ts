@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Shop} from "../models/shop/shop";
 import {ShopService} from "../shared/shop.service";
-import {AuthenticationService} from "../shared/authentication.service";
 
 @Component({
   selector: 'wea5-home',
@@ -19,16 +18,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  constructor(private shopService: ShopService, private auth: AuthenticationService) { }
+  constructor(private shopService: ShopService) { }
 
   ngOnInit(): void {
-    this.updateShop()
-  }
-
-  updateShop(): void {
-    this.shopService.getByAdminId().subscribe(res => {
-      this.shop = res
-    })
+    this.shopService.cast.subscribe(res => this.shop = res)
+    this.shopService.getByAdminId()
   }
 
 }

@@ -3,11 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from "./login/login.component";
 import {HomeComponent} from "./home/home.component";
 import {CanNavigateToAdminGuard} from "./can-navigate-to-admin.guard";
+import {CartStatisticsComponent} from "./charts/cart-statistics/cart-statistics.component";
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -17,6 +18,11 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [CanNavigateToAdminGuard]
+  },
+  {
+    path: 'cartstatistics',
+    component: CartStatisticsComponent,
     canActivate: [CanNavigateToAdminGuard]
   },
   {
