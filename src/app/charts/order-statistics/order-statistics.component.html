@@ -5,7 +5,7 @@
   <div class="row g-3 mb-3">
     <div id="aggregateBy" class="col-sm-3">
       <label class="form-label" style="font-weight: bold;">Aggregate by</label>
-      <select class="form-select" aria-label="select aggregation level">
+      <select class="form-select" aria-label="select aggregation level" [(ngModel)]="aggregate" (ngModelChange)="updateData()">
         <option value="Day">Day</option>
         <option value="Month">Month</option>
         <option value="Year">Year</option>
@@ -14,14 +14,14 @@
 
     <div id="displayedData" class="col-sm-3">
       <label class="form-label" style="font-weight: bold;">Display</label>
-      <select class="form-select" aria-label="select aggregation level">
+      <select class="form-select" aria-label="select aggregation level" [(ngModel)]="display" (ngModelChange)="updateData()">
         <option value="countOrders">Number of orders</option>
         <option value="revenue">Revenue</option>
         <option value="discRevenue">Discounted Revenue</option>
         <option value="avgRevenue">Avg. revenue per order</option>
-        <option value="avgDiscRevenue">Discounted avg. revenue per order</option>
+        <option value="avgDiscRevenue">Discounted avg. revenue / order</option>
         <option value="countProducts">Number of products sold</option>
-        <option value="avgProducts">Average number of products per order</option>
+        <option value="avgProducts">Avg. number of products / order</option>
       </select>
     </div>
   </div>
