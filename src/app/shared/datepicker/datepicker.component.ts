@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output,} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output,} from '@angular/core';
 import {DatepickerOptions} from "ng2-datepicker";
 import { getYear } from 'date-fns';
 import locale from 'date-fns/locale/en-US';
@@ -12,7 +12,7 @@ import locale from 'date-fns/locale/en-US';
 })
 export class DatepickerComponent implements OnInit {
 
-  date = new Date();
+  @Input() date = new Date();
 
   options: DatepickerOptions = {
     minYear: getYear(new Date()) - 3, // minimum available and selectable year

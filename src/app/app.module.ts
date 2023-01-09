@@ -13,9 +13,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ShopformComponent } from './forms/shopform/shopform.component';
 import { OrderStatisticsComponent } from './charts/order-statistics/order-statistics.component';
 import { NgChartsModule } from 'ng2-charts';
-import {RouterModule} from "@angular/router";
 import { DatepickerComponent } from './shared/datepicker/datepicker.component';
 import { DatepickerModule} from "ng2-datepicker";
+import { CartStatisticsComponent } from './charts/cart-statistics/cart-statistics.component';
 
 
 @NgModule({
@@ -26,7 +26,8 @@ import { DatepickerModule} from "ng2-datepicker";
     NavbarComponent,
     ShopformComponent,
     OrderStatisticsComponent,
-    DatepickerComponent
+    DatepickerComponent,
+    CartStatisticsComponent
   ],
   imports: [
     BrowserModule,

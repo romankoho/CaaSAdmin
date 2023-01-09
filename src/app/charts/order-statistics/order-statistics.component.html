@@ -1,8 +1,8 @@
 <wea5-navbar></wea5-navbar>
 
 <div class="bg-white rounded-3 p-3">
-
-  <div class="row g-3 mb-3">
+  <h3 class="mb-3 mt-2" style="font-weight: bold; color: #093D65">Order Statistics</h3>
+    <div class="row g-3 mb-3">
     <div id="aggregateBy" class="col-sm-3">
       <label class="form-label" style="font-weight: bold;">Aggregate by</label>
       <select class="form-select" aria-label="select aggregation level" [(ngModel)]="aggregate" (ngModelChange)="updateData()">
@@ -17,9 +17,7 @@
       <select class="form-select" aria-label="select aggregation level" [(ngModel)]="display" (ngModelChange)="updateData()">
         <option value="countOrders">Number of orders</option>
         <option value="revenue">Revenue</option>
-        <option value="discRevenue">Discounted Revenue</option>
         <option value="avgRevenue">Avg. revenue per order</option>
-        <option value="avgDiscRevenue">Discounted avg. revenue / order</option>
         <option value="countProducts">Number of products sold</option>
         <option value="avgProducts">Avg. number of products / order</option>
       </select>
@@ -31,18 +29,18 @@
 
       <div id="fromDate" class="col-sm-3">
         <label class="form-label" style="font-weight: bold;">From</label>
-        <wea5-datepicker (dateChangedEvent)="fromDateChanged($event)"></wea5-datepicker>
+        <wea5-datepicker [date]="fromDate" (dateChangedEvent)="fromDateChanged($event)"></wea5-datepicker>
       </div>
 
       <div id="untilDate" class="col-sm-3">
         <label class="form-label" style="font-weight: bold;">Until</label>
-        <wea5-datepicker (dateChangedEvent)="untilDateChanged($event)"></wea5-datepicker>
+        <wea5-datepicker [date]="untilDate" (dateChangedEvent)="untilDateChanged($event)"></wea5-datepicker>
       </div>
 
   </div>
 
   <div class="text-center">
-    <canvas id="cartStatistics"  height="120"
+    <canvas id="orderStatistics"  height="120"
       baseChart type="bar">
     </canvas>
   </div>

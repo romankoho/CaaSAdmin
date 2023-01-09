@@ -1,37 +1,33 @@
 import {Component, OnInit} from '@angular/core';
 import {Chart} from "chart.js";
 import {StatisticsService} from "../../shared/statistics.service";
-import {OrderStatisticsResultDateAggregate} from "../../models/order/orderStatisticsResultDateAggregate";
 import {NgToastService} from "ng-angular-popup";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-
-
+import {CartStatisticsResultDateAggregate} from "../../models/cart/cartStatisticsResultDateAggregate";
 
 @Component({
-  selector: 'wea5-order-statistics',
-  templateUrl: './order-statistics.component.html',
+  selector: 'wea5-cart-statistics',
+  templateUrl: './cart-statistics.component.html',
   styles: [
   ]
 })
-export class OrderStatisticsComponent implements OnInit {
+export class CartStatisticsComponent implements OnInit {
 
   constructor(private statisticsService: StatisticsService, private toast: NgToastService) {
   }
 
-  orderChart: Chart
+  cartChart: Chart
   fromDate: Date = new Date()
   untilDate: Date = new Date()
 
-  aggregatedResult: OrderStatisticsResultDateAggregate[]
+  aggregatedResult: CartStatisticsResultDateAggregate[]
 
   aggregate: string = "Month"
-  display: string = "countOrders"
+  display: string = "countCarts"
 
   dataLabels: string[] = []
   dataSeriesOne: number[] = []
-  dataSeriesTwo: number[] = []
   dataSeriesOneLabel: string = 'Select data'
-  dataSeriesTwoLabel: string = ''
 
   ngOnInit(): void {
     let newDate = this.fromDate.setDate(this.fromDate.getDate()-60)
@@ -40,9 +36,9 @@ export class OrderStatisticsComponent implements OnInit {
   }
 
   createChart() {
-    if (this.orderChart) this.orderChart.destroy();
+    if (this.cartChart) this.cartChart.destroy();
 
-    this.orderChart = new Chart("orderStatistics", {
+    this.cartChart = new Chart("cartStatistics", {
       type: 'bar',
       data: {
         labels: this.dataLabels,
@@ -57,32 +53,16 @@ export class OrderStatisticsComponent implements OnInit {
               clamp: true,
               align: 'end'
             }
-          },
-          {
-            data: this.dataSeriesTwo,
-            label: this.dataSeriesTwoLabel,
-            backgroundColor: '#0143ad',
-            datalabels: {
-              color: '#000000',
-              anchor: 'end',
-              clamp: true,
-              align: 'end'
-            }
           }]
       },
       plugins: [ChartDataLabels]
     })
 
-    if (this.display !== 'revenue' && this.display !== 'avgRevenue') {
-      this.orderChart.data.datasets.splice(1,1)
-      this.orderChart.update()
-    }
   }
 
   prepareData(){
     this.dataLabels = []
     this.dataSeriesOne = []
-    this.dataSeriesTwo = []
 
     let i = 0
     for(const item of this.aggregatedResult) {
@@ -94,35 +74,31 @@ export class OrderStatisticsComponent implements OnInit {
       }
       i++
 
-
       this.dataLabels.push(item.date.slice(0,10))
 
       switch (this.display) {
-        case "countOrders":
-          this.dataSeriesOne.push(item.countOrders)
+        case "countCarts":
+          this.dataSeriesOne.push(item.countCarts)
           this.dataSeriesOneLabel = "Number of orders"
           break
-        case "revenue":
-          this.dataSeriesOne.push(item.sumOfOrders)
-          this.dataSeriesTwo.push(item.discountedSumOfOrders)
-          this.dataSeriesOneLabel = "Revenue"
-          this.dataSeriesTwoLabel = "Discounted Revenue"
+        case "sumCartValue":
+          this.dataSeriesOne.push(item.sumCartsValue)
+          this.dataSeriesOneLabel = "Added value of carts"
           break
-        case "avgRevenue":
-          this.dataSeriesOne.push(item.avgValueOfOrders)
-          this.dataSeriesTwo.push(item.discountedAvgValueOfOrders)
-          this.dataSeriesOneLabel = "Avg. revenue per order"
-          this.dataSeriesTwoLabel = "Discounted avg. revenue per order"
+        case "avgValue":
+          this.dataSeriesOne.push(item.avgValueOfCarts)
+          this.dataSeriesOneLabel = "Avg value of carts"
           break
         case "countProducts":
-          this.dataSeriesOne.push(item.sumProducts)
-          this.dataSeriesOneLabel = "sum of sold products"
+          this.dataSeriesOne.push(item.countProductsInCarts)
+          this.dataSeriesOneLabel = "Number of products in carts"
           break
         case "avgProducts":
-          this.dataSeriesOne.push(item.avgNumberOfProductsInOrders)
-          this.dataSeriesOneLabel = "avg number of products per order"
+          this.dataSeriesOne.push(item.avgProductsInCart)
+          this.dataSeriesOneLabel = "Avg. products per cart"
+          break
       }
-     }
+    }
   }
 
   fromDateChanged($event: Date) {
@@ -136,7 +112,7 @@ export class OrderStatisticsComponent implements OnInit {
   }
 
   updateData() {
-    this.statisticsService.orderStatisticsAggregated(this.fromDate, this.untilDate, this.aggregate).subscribe(res => {
+    this.statisticsService.cartStatisticsAggregated(this.fromDate, this.untilDate, this.aggregate).subscribe(res => {
       this.aggregatedResult = res
       this.prepareData()
       this.createChart()

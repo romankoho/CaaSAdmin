@@ -6,5 +6,6 @@ export interface OrderStatisticsResultDateAggregate {
   discountedSumOfOrders: number,
   avgValueOfOrders: number,
   discountedAvgValueOfOrders: number,
+  sumProducts: number,
   avgNumberOfProductsInOrders: number
 }

@@ -4,6 +4,7 @@ import {LoginComponent} from "./login/login.component";
 import {HomeComponent} from "./home/home.component";
 import {CanNavigateToAdminGuard} from "./can-navigate-to-admin.guard";
 import {OrderStatisticsComponent} from "./charts/order-statistics/order-statistics.component";
+import {CartStatisticsComponent} from "./charts/cart-statistics/cart-statistics.component";
 
 const routes: Routes = [
   {
@@ -23,6 +24,11 @@ const routes: Routes = [
   {
     path: 'orderstatistics',
     component: OrderStatisticsComponent,
+    canActivate: [CanNavigateToAdminGuard]
+  },
+  {
+    path: 'cartstatistics',
+    component: CartStatisticsComponent,
     canActivate: [CanNavigateToAdminGuard]
   },
   {

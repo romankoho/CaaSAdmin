@@ -1,0 +1,49 @@
+<wea5-navbar></wea5-navbar>
+
+<div class="bg-white rounded-3 p-3">
+  <h3 class="mb-3 mt-2" style="font-weight: bold; color: #093D65">Cart Statistics</h3>
+  <div class="row g-3 mb-3">
+    <div id="aggregateBy" class="col-sm-3">
+      <label class="form-label" style="font-weight: bold;">Aggregate by</label>
+      <select class="form-select" aria-label="select aggregation level" [(ngModel)]="aggregate" (ngModelChange)="updateData()">
+        <option value="Day">Day</option>
+        <option value="Month">Month</option>
+        <option value="Year">Year</option>
+      </select>
+    </div>
+
+    <div id="displayedData" class="col-sm-3">
+      <label class="form-label" style="font-weight: bold;">Display</label>
+      <select class="form-select" aria-label="select aggregation level" [(ngModel)]="display" (ngModelChange)="updateData()">
+        <option value="countCarts">Number of carts</option>
+        <option value="sumCartValue">Added value of carts</option>
+        <option value="avgValue">Avg. value of carts</option>
+        <option value="countProducts">Sum of products in carts</option>
+        <option value="avgProducts">Avg. number of products / cart</option>
+      </select>
+    </div>
+  </div>
+
+
+  <div id="inputGroup" class="row g-3 mb-3">
+
+    <div id="fromDate" class="col-sm-3">
+      <label class="form-label" style="font-weight: bold;">From</label>
+      <wea5-datepicker [date]="fromDate" (dateChangedEvent)="fromDateChanged($event)"></wea5-datepicker>
+    </div>
+
+    <div id="untilDate" class="col-sm-3">
+      <label class="form-label" style="font-weight: bold;">Until</label>
+      <wea5-datepicker [date]="untilDate" (dateChangedEvent)="untilDateChanged($event)"></wea5-datepicker>
+    </div>
+
+  </div>
+
+  <div class="text-center">
+    <canvas id="cartStatistics"  height="120"
+            baseChart type="bar">
+    </canvas>
+  </div>
+</div>
+
+
