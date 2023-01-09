@@ -16,6 +16,8 @@ import { NgChartsModule } from 'ng2-charts';
 import { DatepickerComponent } from './shared/datepicker/datepicker.component';
 import { DatepickerModule} from "ng2-datepicker";
 import { CartStatisticsComponent } from './charts/cart-statistics/cart-statistics.component';
+import { JsonFormComponent } from './discounts/json-form/json-form.component';
+import { DiscountformComponent } from './forms/discountform/discountform.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { CartStatisticsComponent } from './charts/cart-statistics/cart-statistic
     ShopformComponent,
     OrderStatisticsComponent,
     DatepickerComponent,
-    CartStatisticsComponent
+    CartStatisticsComponent,
+    JsonFormComponent,
+    DiscountformComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,54 @@
+<div class="mb-2 mt-2">
+  <form [formGroup]="discountForm"
+        (ngSubmit)="submitForm()">
+
+    <div class="row g-3">
+      <div class="col-12">
+        <label for="name" class="form-label">Name</label>
+        <input [ngClass]="{'border-warning': errors['firstName']}"
+               name="name"
+               formControlName="name"
+               type="text" class="form-control" id="name">
+        <div class="text-info-emphasis" *ngIf="errors['name']">
+          {{ errors['name'] }}
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row g-3">
+      <div class="col-12">
+        <label class="form-label" style="font-weight: bold;">Rule</label>
+        <select
+          class="form-select" aria-label="select aggregation level"
+          name="rule"
+          formControlName="rule"
+          id="rule">
+          <option value="timeWindow">Time Window Rule</option>
+          <option value="minProd">Minimum Product Count Rule</option>
+        </select>
+        <div class="text-info-emphasis" *ngIf="errors['rule']">
+          {{ errors['rule'] }}
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row g-3">
+      <div class="col-12">
+        <label for="name" class="form-label">Rule Setting</label>
+        <textarea
+          class="form-control"
+          formControlName="ruleSetting"
+          id="ruleSetting" name="ruleSetting">
+        </textarea>
+        <div class="text-info-emphasis" *ngIf="errors['ruleSetting']">
+          {{ errors['ruleSetting'] }}
+        </div>
+      </div>
+    </div>
+
+    <button class="w-100 btn btn-primary btn-lg" [disabled]="discountForm.invalid" type="submit">Save discount setting</button>
+
+  </form>
+</div>
