@@ -5,6 +5,8 @@ import {HomeComponent} from "./home/home.component";
 import {CanNavigateToAdminGuard} from "./can-navigate-to-admin.guard";
 import {OrderStatisticsComponent} from "./charts/order-statistics/order-statistics.component";
 import {CartStatisticsComponent} from "./charts/cart-statistics/cart-statistics.component";
+import {DiscountformComponent} from "./forms/discountform/discountform.component";
+import {DiscountListComponent} from "./discount-list/discount-list.component";
 
 const routes: Routes = [
   {
@@ -29,6 +31,16 @@ const routes: Routes = [
   {
     path: 'cartstatistics',
     component: CartStatisticsComponent,
+    canActivate: [CanNavigateToAdminGuard]
+  },
+  {
+    path: 'discount',
+    component: DiscountformComponent,
+    canActivate: [CanNavigateToAdminGuard]
+  },
+  {
+    path: 'discountlist',
+    component: DiscountListComponent,
     canActivate: [CanNavigateToAdminGuard]
   },
   {

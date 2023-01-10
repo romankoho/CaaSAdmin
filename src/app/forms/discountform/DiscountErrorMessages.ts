@@ -7,19 +7,7 @@ export class ErrorMessage {
 }
 
 export const DiscountErrorMessages = [
-  new ErrorMessage('firstName', 'required', 'Please enter a first name'),
-  new ErrorMessage('lastName', 'required', 'Please enter a last name'),
-  new ErrorMessage('email', 'email', 'Please enter a valid email address'),
-  new ErrorMessage('email', 'required', 'Please enter a email address'),
-  new ErrorMessage('telephoneNumber', 'required', 'Please enter a phone number'),
-  new ErrorMessage('address', 'required', 'Please enter a last address'),
-  new ErrorMessage('country', 'required', 'Please enter a last country'),
-  new ErrorMessage('city', 'required', 'Please enter a city'),
-  new ErrorMessage('zip', 'required', 'Please enter a last ZIP code'),
-  new ErrorMessage('ccName', 'required', 'Please enter the name of the card holder'),
-  new ErrorMessage('ccNumber', 'required', 'Please enter a credit card number'),
-  new ErrorMessage('ccExpiration', 'required', 'Please enter an expiration date'),
-  new ErrorMessage('ccExpiration', 'pattern', 'Please enter a valid expiration date'),
-  new ErrorMessage('ccCCV', 'required', 'Please enter a CCV number'),
-  new ErrorMessage('ccCCV', 'pattern', 'Please enter a valid CCV number'),
+  new ErrorMessage('name', 'required', 'Please enter a discount setting name'),
+  new ErrorMessage('ruleSetting', 'required', 'Please enter rule parameters'),
+  new ErrorMessage('actionSetting', 'required', 'Please enter action parameters'),
 ];

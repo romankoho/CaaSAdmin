@@ -1,54 +1,88 @@
-<div class="mb-2 mt-2">
-  <form [formGroup]="discountForm"
-        (ngSubmit)="submitForm()">
+<wea5-navbar></wea5-navbar>
 
-    <div class="row g-3">
-      <div class="col-12">
-        <label for="name" class="form-label">Name</label>
-        <input [ngClass]="{'border-warning': errors['firstName']}"
-               name="name"
-               formControlName="name"
-               type="text" class="form-control" id="name">
-        <div class="text-info-emphasis" *ngIf="errors['name']">
-          {{ errors['name'] }}
+<div class="bg-white rounded-3 p-3">
+  <div class="mb-2 mt-2 ">
+    <form [formGroup]="discountForm"
+          (ngSubmit)="submitForm()">
+
+      <div class="row g-3">
+        <div class="col-sm-12">
+          <label for="name" class="form-label" style="font-weight: bold;">Name</label>
+          <input [ngClass]="{'border-warning': errors['firstName']}"
+                 name="name"
+                 formControlName="name"
+                 type="text" class="form-control" id="name">
+          <div class="text-info-emphasis" *ngIf="errors['name']">
+            {{ errors['name'] }}
+          </div>
         </div>
-      </div>
-    </div>
 
 
-    <div class="row g-3">
-      <div class="col-12">
-        <label class="form-label" style="font-weight: bold;">Rule</label>
-        <select
-          class="form-select" aria-label="select aggregation level"
-          name="rule"
-          formControlName="rule"
-          id="rule">
-          <option value="timeWindow">Time Window Rule</option>
-          <option value="minProd">Minimum Product Count Rule</option>
-        </select>
-        <div class="text-info-emphasis" *ngIf="errors['rule']">
-          {{ errors['rule'] }}
+        <div class="col-sm-6">
+          <label class="form-label" style="font-weight: bold;">Rule</label>
+          <select
+            class="form-select" aria-label="select aggregation level"
+            name="rule"
+            formControlName="rule"
+            id="rule">
+            <option value="24EEFF2C-65C6-4482-B1AC-C6CB5F2D6B84">Minimum Product Count Rule</option>
+            <option value="0F4E0B04-E32B-4897-804C-92F858468D8A">Time Window Rule</option>
+          </select>
+          <div class="text-info-emphasis" *ngIf="errors['rule']">
+            {{ errors['rule'] }}
+          </div>
         </div>
-      </div>
-    </div>
 
+        <div class="col-sm-6">
+          <label class="form-label" style="font-weight: bold;">Action</label>
+          <select
+            class="form-select" aria-label="select aggregation level"
+            name="action"
+            formControlName="action"
+            id="action">
+            <option value="68A4020D-A8AC-4A74-8A04-24E449786898">Fixed discount value</option>
+            <option value="29AD1EEA-1CFB-4473-8556-65F86FCA0471">Percentage discount value</option>
+          </select>
+          <div class="text-info-emphasis" *ngIf="errors['action']">
+            {{ errors['action'] }}
+          </div>
+        </div>
 
-    <div class="row g-3">
-      <div class="col-12">
-        <label for="name" class="form-label">Rule Setting</label>
-        <textarea
-          class="form-control"
-          formControlName="ruleSetting"
-          id="ruleSetting" name="ruleSetting">
+        <div class="col-sm-6">
+          <label for="name" class="form-label" style="font-weight: bold;">Rule Setting</label>
+          <textarea
+            class="form-control"
+            formControlName="ruleSetting"
+            id="ruleSetting" name="ruleSetting"
+            rows="6"
+            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'>
         </textarea>
-        <div class="text-info-emphasis" *ngIf="errors['ruleSetting']">
-          {{ errors['ruleSetting'] }}
+          <div class="text-info-emphasis" *ngIf="errors['ruleSetting']">
+            {{ errors['ruleSetting'] }}
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="name" class="form-label" style="font-weight: bold;">Action Setting</label>
+          <textarea
+            class="form-control"
+            formControlName="actionSetting"
+            id="actionSetting"
+            name="actionSetting"
+            rows="6"
+            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'>
+        </textarea>
+          <div class="text-info-emphasis" *ngIf="errors['actionSetting']">
+            {{ errors['actionSetting'] }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <button class="w-100 btn btn-primary btn-lg" [disabled]="discountForm.invalid" type="submit">Save discount setting</button>
+      <hr class="my-4">
+      <button class="w-100 btn btn-primary btn-lg" [disabled]="discountForm.invalid" type="submit">Save discount setting</button>
 
-  </form>
+    </form>
+  </div>
+
 </div>
+
