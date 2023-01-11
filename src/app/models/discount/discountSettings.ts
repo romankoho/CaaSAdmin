@@ -7,7 +7,7 @@ export interface DiscountSettingRaw{
   concurrencyToken?: string
 }
 
-export interface DiscountSettingForCreation {
+export interface DiscountSetting {
   id: string,
   name?: string,
   rule: DiscountMetadataSettingRaw,

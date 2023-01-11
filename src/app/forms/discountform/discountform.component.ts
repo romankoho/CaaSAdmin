@@ -7,7 +7,7 @@ import {
   FixedValueDiscountActionSettings, PercentageDiscountActionSettings,
   TimeWindowRuleSetting, MinProductCountRuleSetting,
 } from "./DiscountSettingPlaceholders";
-import {DiscountSettingForCreation} from "../../models/discount/discountSettings";
+import {DiscountSetting} from "../../models/discount/discountSettings";
 import {DiscountService} from "../../discount.service";
 import {NgToastService} from "ng-angular-popup";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -19,6 +19,8 @@ import {ActivatedRoute, Router} from "@angular/router";
   ]
 })
 export class DiscountformComponent implements OnInit {
+  constructor(private fb: FormBuilder, private discountService: DiscountService,
+              private toast: NgToastService, private route: ActivatedRoute, private router: Router) { }
 
   discountForm!: FormGroup;
   errors: { [key: string]: string } = {};
@@ -30,10 +32,21 @@ export class DiscountformComponent implements OnInit {
     ["29ad1eea-1cfb-4473-8556-65f86fca0471"]: PercentageDiscountActionSettings,
   }
 
-  discountSetting: DiscountSettingForCreation
+  discountSetting: DiscountSetting
+  updatingDiscount = false
 
-  constructor(private fb: FormBuilder, private discountService: DiscountService,
-              private toast: NgToastService, private route: ActivatedRoute, private router: Router) { }
+  name: string = ""
+  rule: string = "24eeff2c-65c6-4482-b1ac-c6cb5f2d6b84"
+  ruleSetting: string = JSON.stringify(MinProductCountRuleSetting, null, 2)
+
+  originalRule: string = "24eeff2c-65c6-4482-b1ac-c6cb5f2d6b84"
+  originalRuleSetting: string
+
+  action: string = "68a4020d-a8ac-4a74-8a04-24e449786898"
+  actionSetting: string = JSON.stringify(FixedValueDiscountActionSettings, null, 2)
+
+  originalAction: string = "68a4020d-a8ac-4a74-8a04-24e449786898"
+  originalActionSetting: string
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
@@ -61,21 +74,6 @@ export class DiscountformComponent implements OnInit {
 
     this.initForm()
   }
-
-  updatingDiscount = false
-
-  name: string = ""
-  rule: string = "24eeff2c-65c6-4482-b1ac-c6cb5f2d6b84"
-  ruleSetting: string = JSON.stringify(MinProductCountRuleSetting, null, 2)
-
-  originalRule: string = "24eeff2c-65c6-4482-b1ac-c6cb5f2d6b84"
-  originalRuleSetting: string
-
-  action: string = "68a4020d-a8ac-4a74-8a04-24e449786898"
-  actionSetting: string = JSON.stringify(FixedValueDiscountActionSettings, null, 2)
-
-  originalAction: string = "68a4020d-a8ac-4a74-8a04-24e449786898"
-  originalActionSetting: string
 
   initForm() {
     this.discountForm = this.fb.group({
@@ -144,26 +142,47 @@ export class DiscountformComponent implements OnInit {
 
   submitForm(){
 
-    let newSetting: DiscountSettingForCreation = {
-      id: uuidv4(),
-      name: this.discountForm.value.name,
-      rule: {
-        id: this.discountForm.value.rule,
-        parameters: JSON.parse(this.discountForm.value.ruleSetting)
-      },
-      action: {
-        id: this.discountForm.value.action,
-        parameters: JSON.parse(this.discountForm.value.actionSetting)
-      }
-    }
-
     if(this.updatingDiscount) {
+      let updateSetting: DiscountSetting = {
+        id: this.discountSetting.id,
+        name: this.discountForm.value.name,
+        rule: {
+          id: this.discountForm.value.rule,
+          parameters: JSON.parse(this.discountForm.value.ruleSetting)
+        },
+        action: {
+          id: this.discountForm.value.action,
+          parameters: JSON.parse(this.discountForm.value.actionSetting)
+        }
+      }
 
-     this.discountService.update()
+     this.discountService.update(this.discountSetting.id, updateSetting).subscribe({
+       next:(res) => {
+         this.toast.success({detail: "Discount Setting Updated!", duration:5000})
+         this.router.navigateByUrl("/discounts")
+      },
+       error:(e) => {
+         this.toast.error({detail: e.error.message, duration: 10000})
+       }
+     })
     } else {
+
+      let newSetting: DiscountSetting = {
+        id: uuidv4(),
+        name: this.discountForm.value.name,
+        rule: {
+          id: this.discountForm.value.rule,
+          parameters: JSON.parse(this.discountForm.value.ruleSetting)
+        },
+        action: {
+          id: this.discountForm.value.action,
+          parameters: JSON.parse(this.discountForm.value.actionSetting)
+        }
+      }
       this.discountService.saveDiscountSetting(newSetting).subscribe( {
         next:(res) => {
           this.toast.success({detail: "Discount Setting Created!", duration:5000})
+          this.router.navigateByUrl("/discounts")
         },
         error:(e) => {
           this.toast.error({detail: e.error.message, duration: 10000})

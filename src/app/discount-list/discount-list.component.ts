@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DiscountSettingForCreation} from "../models/discount/discountSettings";
+import {DiscountSetting} from "../models/discount/discountSettings";
 import {DiscountService} from "../discount.service";
 import {NgToastService} from "ng-angular-popup";
 import {v4 as uuidv4} from "uuid";
@@ -14,13 +14,13 @@ export class DiscountListComponent implements OnInit {
 
   constructor(private discountService: DiscountService, private toast: NgToastService) { }
 
-  discounts: DiscountSettingForCreation[]
+  discounts: DiscountSetting[]
 
   metadata: {[key: string]: string} = {
-    ["24EEFF2C-65C6-4482-B1AC-C6CB5F2D6B84"]: "MinProductCountDiscountRule",
-    ["0F4E0B04-E32B-4897-804C-92F858468D8A"]: "TimeWindowDiscountRule",
-    ["68A4020D-A8AC-4A74-8A04-24E449786898"]: "FixedValueDiscountAction",
-    ["29AD1EEA-1CFB-4473-8556-65F86FCA0471"]: "PercentageDiscountAction",
+    ["24eeff2c-65c6-4482-b1ac-c6cb5f2d6b84"]: "MinProductCountDiscountRule",
+    ["0f4e0b04-e32b-4897-804c-92f858468d8a"]: "TimeWindowDiscountRule",
+    ["68a4020d-a8ac-4a74-8a04-24e449786898"]: "FixedValueDiscountAction",
+    ["29ad1eea-1cfb-4473-8556-65f86fca0471"]: "PercentageDiscountAction",
   }
 
   emptyGuid = "empty"
@@ -29,11 +29,11 @@ export class DiscountListComponent implements OnInit {
     return this.metadata[id.toUpperCase()]
   }
 
-  getActionForId(setting: DiscountSettingForCreation){
+  getActionForId(setting: DiscountSetting){
     return JSON.stringify(setting.action.parameters, null, 2)
   }
 
-  getRuleForId(setting: DiscountSettingForCreation){
+  getRuleForId(setting: DiscountSetting){
     return JSON.stringify(setting.rule.parameters, null, 2)
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {DiscountSettingForCreation} from "./models/discount/discountSettings";
+import {DiscountSetting} from "./models/discount/discountSettings";
 import {map, Observable} from "rxjs";
 import {environment} from "../environments/environment";
 
@@ -20,24 +20,24 @@ export class DiscountService {
     return header
   }
 
-  saveDiscountSetting(discountSetting: DiscountSettingForCreation): Observable<DiscountSettingForCreation> {
-    return this.http.post<DiscountSettingForCreation>(`${environment.server}/discount`, discountSetting,{headers: this.getHeader()})
-      .pipe(map<any,DiscountSettingForCreation>(res => res))
+  saveDiscountSetting(discountSetting: DiscountSetting): Observable<DiscountSetting> {
+    return this.http.post<DiscountSetting>(`${environment.server}/discount`, discountSetting,{headers: this.getHeader()})
+      .pipe(map<any,DiscountSetting>(res => res))
   }
 
-  getById(discountSettingId: string): Observable<DiscountSettingForCreation> {
-    return this.http.get<DiscountSettingForCreation>(`${environment.server}/discount/${discountSettingId}`,  {headers: this.getHeader()})
-      .pipe(map<any, DiscountSettingForCreation>(res => res))
+  getById(discountSettingId: string): Observable<DiscountSetting> {
+    return this.http.get<DiscountSetting>(`${environment.server}/discount/${discountSettingId}`,  {headers: this.getHeader()})
+      .pipe(map<any, DiscountSetting>(res => res))
   }
 
-  getAll(): Observable<DiscountSettingForCreation[]> {
-    return this.http.get<DiscountSettingForCreation[]>(`${environment.server}/discount`, {headers: this.getHeader()})
-      .pipe(map<any,DiscountSettingForCreation[]>(res => res))
+  getAll(): Observable<DiscountSetting[]> {
+    return this.http.get<DiscountSetting[]>(`${environment.server}/discount`, {headers: this.getHeader()})
+      .pipe(map<any,DiscountSetting[]>(res => res))
   }
 
-  update(id:string, updatedSetting: DiscountSettingForCreation): Observable<DiscountSettingForCreation> {
-    return this.http.put<DiscountSettingForCreation>(`${environment.server}/discount/${id}`, updatedSetting, {headers: this.getHeader()})
-      .pipe(map<any,DiscountSettingForCreation>(res => res))
+  update(id:string, updatedSetting: DiscountSetting): Observable<DiscountSetting> {
+    return this.http.put<DiscountSetting>(`${environment.server}/discount/${id}`, updatedSetting, {headers: this.getHeader()})
+      .pipe(map<any,DiscountSetting>(res => res))
   }
 
   delete(discountSettingId: string): Observable<any>{
