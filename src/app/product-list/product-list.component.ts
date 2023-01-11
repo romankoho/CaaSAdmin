@@ -12,6 +12,8 @@ import {NgToastService} from "ng-angular-popup";
 })
 export class ProductListComponent implements OnInit {
 
+  emptyGuid = "empty"
+
   pagedResult: ProductPagedResult = {
     firstPage: {
       direction: Direction.Forward
@@ -46,7 +48,7 @@ export class ProductListComponent implements OnInit {
       this.pagedResult = res
       this.currentPage = 1
       this.searchTerm = ""
-      if(this.pagedResult.nextPage.reference != undefined) {
+      if(this.pagedResult.nextPage != undefined) {
         this.disableNext = false
       }
     })
@@ -63,9 +65,10 @@ export class ProductListComponent implements OnInit {
         }
 
         this.searchTerm = $event
-
-        if(this.pagedResult.nextPage.reference != undefined) {
+        if(this.pagedResult.nextPage != undefined) {
           this.disableNext = false
+        } else {
+          this.disableNext = true
         }
       })
     } else {
@@ -92,4 +95,7 @@ export class ProductListComponent implements OnInit {
     })
   }
 
+  delete(id: string) {
+
+  }
 }

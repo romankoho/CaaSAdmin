@@ -162,7 +162,7 @@ export class DiscountformComponent implements OnInit {
          this.router.navigateByUrl("/discounts")
       },
        error:(e) => {
-         this.toast.error({detail: e.error.message, duration: 10000})
+         this.toast.success({detail: "Error Updating!", duration:5000})
        }
      })
     } else {
@@ -185,7 +185,7 @@ export class DiscountformComponent implements OnInit {
           this.router.navigateByUrl("/discounts")
         },
         error:(e) => {
-          this.toast.error({detail: e.error.message, duration: 10000})
+          this.toast.success({detail: "Error Creating Discount Setting!", duration:5000})
         }
       })
     }

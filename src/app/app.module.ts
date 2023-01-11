@@ -20,6 +20,7 @@ import { DiscountformComponent } from './forms/discountform/discountform.compone
 import { DiscountListComponent } from './discount-list/discount-list.component';
 import { SearchComponent } from './search/search.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { ProductformComponent } from './forms/productform/productform.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { ProductListComponent } from './product-list/product-list.component';
     DiscountformComponent,
     DiscountListComponent,
     SearchComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductformComponent
   ],
   imports: [
     BrowserModule,
