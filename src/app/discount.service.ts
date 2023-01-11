@@ -25,9 +25,19 @@ export class DiscountService {
       .pipe(map<any,DiscountSettingForCreation>(res => res))
   }
 
+  getById(discountSettingId: string): Observable<DiscountSettingForCreation> {
+    return this.http.get<DiscountSettingForCreation>(`${environment.server}/discount/${discountSettingId}`,  {headers: this.getHeader()})
+      .pipe(map<any, DiscountSettingForCreation>(res => res))
+  }
+
   getAll(): Observable<DiscountSettingForCreation[]> {
     return this.http.get<DiscountSettingForCreation[]>(`${environment.server}/discount`, {headers: this.getHeader()})
       .pipe(map<any,DiscountSettingForCreation[]>(res => res))
+  }
+
+  update(id:string, updatedSetting: DiscountSettingForCreation): Observable<DiscountSettingForCreation> {
+    return this.http.put<DiscountSettingForCreation>(`${environment.server}/discount/${id}`, updatedSetting, {headers: this.getHeader()})
+      .pipe(map<any,DiscountSettingForCreation>(res => res))
   }
 
   delete(discountSettingId: string): Observable<any>{

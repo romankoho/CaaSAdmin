@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DiscountSettingForCreation} from "../models/discount/discountSettings";
 import {DiscountService} from "../discount.service";
 import {NgToastService} from "ng-angular-popup";
+import {v4 as uuidv4} from "uuid";
 
 @Component({
   selector: 'wea5-discount-list',
@@ -21,6 +22,8 @@ export class DiscountListComponent implements OnInit {
     ["68A4020D-A8AC-4A74-8A04-24E449786898"]: "FixedValueDiscountAction",
     ["29AD1EEA-1CFB-4473-8556-65F86FCA0471"]: "PercentageDiscountAction",
   }
+
+  emptyGuid = "empty"
 
   mapIdToName(id: string) {
     return this.metadata[id.toUpperCase()]

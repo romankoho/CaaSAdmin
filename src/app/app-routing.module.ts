@@ -34,13 +34,13 @@ const routes: Routes = [
     canActivate: [CanNavigateToAdminGuard]
   },
   {
-    path: 'discount',
-    component: DiscountformComponent,
+    path: 'discounts',
+    component: DiscountListComponent,
     canActivate: [CanNavigateToAdminGuard]
   },
   {
-    path: 'discountlist',
-    component: DiscountListComponent,
+    path: 'discounts/:id',
+    component: DiscountformComponent,
     canActivate: [CanNavigateToAdminGuard]
   },
   {

@@ -10,6 +10,7 @@ import {
 import {DiscountSettingForCreation} from "../../models/discount/discountSettings";
 import {DiscountService} from "../../discount.service";
 import {NgToastService} from "ng-angular-popup";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'wea5-discountform',
@@ -23,25 +24,58 @@ export class DiscountformComponent implements OnInit {
   errors: { [key: string]: string } = {};
 
   placeholders: {[key: string]: any} = {
-    ["24EEFF2C-65C6-4482-B1AC-C6CB5F2D6B84"]: MinProductCountRuleSetting,
-    ["0F4E0B04-E32B-4897-804C-92F858468D8A"]: TimeWindowRuleSetting,
-    ["68A4020D-A8AC-4A74-8A04-24E449786898"]: FixedValueDiscountActionSettings,
-    ["29AD1EEA-1CFB-4473-8556-65F86FCA0471"]: PercentageDiscountActionSettings,
+    ["24eeff2c-65c6-4482-b1ac-c6cb5f2d6b84"]: MinProductCountRuleSetting,
+    ["0f4e0b04-e32b-4897-804c-92f858468d8a"]: TimeWindowRuleSetting,
+    ["68a4020d-a8ac-4a74-8a04-24e449786898"]: FixedValueDiscountActionSettings,
+    ["29ad1eea-1cfb-4473-8556-65f86fca0471"]: PercentageDiscountActionSettings,
   }
 
+  discountSetting: DiscountSettingForCreation
+
   constructor(private fb: FormBuilder, private discountService: DiscountService,
-              private toast: NgToastService) { }
+              private toast: NgToastService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    const id = this.route.snapshot.params['id'];
+
+    if (id != "empty") {
+      this.updatingDiscount = true
+      this.discountService.getById(id).subscribe({
+        next:(result) => {
+          this.discountSetting = result
+          this.name = result.name || ""
+          this.rule = result.rule.id
+          this.action = result.action.id
+          this.ruleSetting = JSON.stringify(result.rule.parameters, null, 2)
+          this.actionSetting = JSON.stringify(result.action.parameters, null, 2)
+
+          this.originalRule = result.rule.id
+          this.originalAction = result.action.id
+          this.originalRuleSetting = JSON.stringify(result.rule.parameters, null, 2)
+          this.originalAction = JSON.stringify(result.action.parameters, null, 2)
+
+          this.initForm()
+        }
+      })
+    }
+
     this.initForm()
   }
 
+  updatingDiscount = false
+
   name: string = ""
-  rule: string = "24EEFF2C-65C6-4482-B1AC-C6CB5F2D6B84"
+  rule: string = "24eeff2c-65c6-4482-b1ac-c6cb5f2d6b84"
   ruleSetting: string = JSON.stringify(MinProductCountRuleSetting, null, 2)
 
-  action: string = "68A4020D-A8AC-4A74-8A04-24E449786898"
+  originalRule: string = "24eeff2c-65c6-4482-b1ac-c6cb5f2d6b84"
+  originalRuleSetting: string
+
+  action: string = "68a4020d-a8ac-4a74-8a04-24e449786898"
   actionSetting: string = JSON.stringify(FixedValueDiscountActionSettings, null, 2)
+
+  originalAction: string = "68a4020d-a8ac-4a74-8a04-24e449786898"
+  originalActionSetting: string
 
   initForm() {
     this.discountForm = this.fb.group({
@@ -63,14 +97,32 @@ export class DiscountformComponent implements OnInit {
   }
 
   ruleChanged(selectedValue: any) {
+    if(this.updatingDiscount) {
+      if (selectedValue == this.originalRule) {
+        this.ruleSetting = this.originalRuleSetting
+      } else {
+        this.ruleSetting = JSON.stringify(this.placeholders[selectedValue], null, 2)
+      }
+    } else {
+      this.ruleSetting = JSON.stringify(this.placeholders[selectedValue], null, 2)
+    }
+
     this.rule = selectedValue
-    this.ruleSetting = JSON.stringify(this.placeholders[selectedValue], null, 2)
     this.initForm()
   }
 
   actionChanged(selectedValue: any) {
+    if(this.updatingDiscount) {
+      if(selectedValue == this.originalAction) {
+        this.actionSetting = this.originalActionSetting
+      } else {
+        this.actionSetting = JSON.stringify(this.placeholders[selectedValue], null, 2)
+      }
+    } else {
+      this.actionSetting = JSON.stringify(this.placeholders[selectedValue], null, 2)
+    }
+
     this.action = selectedValue
-    this.actionSetting = JSON.stringify(this.placeholders[selectedValue], null, 2)
     this.initForm()
   }
 
@@ -105,14 +157,19 @@ export class DiscountformComponent implements OnInit {
       }
     }
 
-    this.discountService.saveDiscountSetting(newSetting).subscribe( {
-      next:(res) => {
-        this.toast.success({detail: "Discount Setting Created!", duration:5000})
-      },
-      error:(e) => {
-        this.toast.error({detail: e.error.message, duration: 10000})
-      }
-    })
+    if(this.updatingDiscount) {
+
+     this.discountService.update()
+    } else {
+      this.discountService.saveDiscountSetting(newSetting).subscribe( {
+        next:(res) => {
+          this.toast.success({detail: "Discount Setting Created!", duration:5000})
+        },
+        error:(e) => {
+          this.toast.error({detail: e.error.message, duration: 10000})
+        }
+      })
+    }
   }
 
 }
