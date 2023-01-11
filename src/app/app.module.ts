@@ -21,6 +21,7 @@ import { DiscountListComponent } from './discount-list/discount-list.component';
 import { SearchComponent } from './search/search.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductformComponent } from './forms/productform/productform.component';
+import { RedirectComponent } from './redirect/redirect.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { ProductformComponent } from './forms/productform/productform.component'
     DiscountListComponent,
     SearchComponent,
     ProductListComponent,
-    ProductformComponent
+    ProductformComponent,
+    RedirectComponent
   ],
   imports: [
     BrowserModule,

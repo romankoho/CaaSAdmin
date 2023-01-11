@@ -9,6 +9,7 @@ import {DiscountformComponent} from "./forms/discountform/discountform.component
 import {DiscountListComponent} from "./discount-list/discount-list.component";
 import {ProductListComponent} from "./product-list/product-list.component";
 import {ProductformComponent} from "./forms/productform/productform.component";
+import {RedirectComponent} from "./redirect/redirect.component";
 
 const routes: Routes = [
   {
@@ -54,6 +55,10 @@ const routes: Routes = [
     path: 'products/:id',
     component: ProductformComponent,
     canActivate: [CanNavigateToAdminGuard]
+  },
+  {
+    path: 'redirect',
+    component: RedirectComponent
   },
   {
     path: 'index.html',

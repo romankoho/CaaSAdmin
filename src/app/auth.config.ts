@@ -12,7 +12,8 @@ export const authConfig: AuthConfig = {
   sessionCheckIFrameUrl: 'http://localhost:8080/auth/realms/caas/protocol/openid-connect/login-status-iframe.html',
   userinfoEndpoint: 'http://localhost:8080/auth/realms/caas/protocol/openid-connect/userinfo',
   clientId: 'caas',
-  redirectUri: window.location.origin + '/index.html',
+  redirectUri: window.location.origin + '/redirect',
+  postLogoutRedirectUri: window.location.origin + '/login',
   silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
   scope: 'profile email',
   silentRefreshTimeout: 5000, // For faster testing

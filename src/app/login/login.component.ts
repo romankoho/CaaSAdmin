@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.route.queryParams.subscribe(params => this.returnTo = params['returnUrl'])
+
   }
 
   doLogin() {
@@ -30,7 +31,4 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  isloggedIn():boolean {
-    return this.auth.isLoggedIn()
-  }
 }
