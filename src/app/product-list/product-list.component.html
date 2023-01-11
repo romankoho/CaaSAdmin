@@ -1,0 +1,52 @@
+<wea5-navbar></wea5-navbar>
+<wea5-search (searchTriggered)="searchTriggered($event)"></wea5-search>
+
+<div class="row justify-content-center">
+  <div >
+    <table class="table table-striped bg-body table-responsive mt-3 rounded-2" *ngIf="pagedResult != undefined" >
+      <thead>
+      </thead>
+      <tbody>
+      <tr class="" *ngFor="let item of pagedResult.items">
+        <th class="w-25">
+          <img src="https://picsum.photos/100?t" alt="placeholder image">
+        </th>
+        <td class="w-25">
+          <div>
+            <a [routerLink]="item.id" target="_blank" class="text-navy">
+              {{item.name}}
+            </a>
+          </div>
+          <div>
+            <h4>
+              {{item.price}}
+            </h4>
+          </div>
+        </td>
+        <td class="w-25">
+          <div>
+            <button class="btn btn-primary"><i class="fa fa fa-shopping-cart"></i> Add to Cart</button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<nav>
+  <ul class="pagination">
+    <li class="page-item" [ngClass]="{
+        disabled: disablePrevious
+        }">
+      <button (click)="navigateToPreviousPage()" class="page-link " >Previous</button>
+    </li>
+    <li class="page-item"><a class="page-link">{{currentPage}}/{{pagedResult.totalPages}}</a></li>
+    <li class="page-item" [ngClass]="{
+        disabled: disableNext
+        }">
+      <button (click)="navigateToNextPage()" class="page-link">Next</button>
+    </li>
+  </ul>
+</nav>

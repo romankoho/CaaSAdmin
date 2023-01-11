@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {DiscountSetting} from "../models/discount/discountSettings";
 import {DiscountService} from "../discount.service";
 import {NgToastService} from "ng-angular-popup";
-import {v4 as uuidv4} from "uuid";
 
 @Component({
   selector: 'wea5-discount-list',
@@ -41,17 +40,14 @@ export class DiscountListComponent implements OnInit {
     this.discountService.getAll().subscribe({
       next:(res) => {
         this.discounts = res
-        console.log(this.discounts)
       },
       error:(e) => {
         this.toast.error({detail: e.error.message, duration: 10000})
       }
     })
-
   }
 
   delete(id: string) {
-    this.discountService.delete(id).subscribe((res) => console.log(res))
     this.discountService.getAll().subscribe((res) => {
       this.discounts = res
     })

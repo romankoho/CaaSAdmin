@@ -7,6 +7,7 @@ import {OrderStatisticsComponent} from "./charts/order-statistics/order-statisti
 import {CartStatisticsComponent} from "./charts/cart-statistics/cart-statistics.component";
 import {DiscountformComponent} from "./forms/discountform/discountform.component";
 import {DiscountListComponent} from "./discount-list/discount-list.component";
+import {ProductListComponent} from "./product-list/product-list.component";
 
 const routes: Routes = [
   {
@@ -41,6 +42,11 @@ const routes: Routes = [
   {
     path: 'discounts/:id',
     component: DiscountformComponent,
+    canActivate: [CanNavigateToAdminGuard]
+  },
+  {
+    path: 'products',
+    component: ProductListComponent,
     canActivate: [CanNavigateToAdminGuard]
   },
   {
