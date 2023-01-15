@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DiscountSetting} from "../models/discount/discountSettings";
-import {DiscountService} from "../discount.service";
+import {DiscountService} from "../shared/discount.service";
 import {NgToastService} from "ng-angular-popup";
 
 @Component({

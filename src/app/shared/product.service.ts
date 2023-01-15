@@ -6,7 +6,6 @@ import { environment } from 'src/environments/environment';
 import {ProductPagedResult} from "../models/product/product-paged-result";
 import {Direction} from "../models/base/parsed-pagination-token";
 import {ProductDetail} from "../models/product/productDetail";
-import {DiscountSetting} from "../models/discount/discountSettings";
 import {ProductForUpdate} from "../models/product/productForUpdate";
 import {Product} from "../models/product/product";
 import {ProductForCreation} from "../models/product/productForCreation";
@@ -56,9 +55,9 @@ export class ProductService {
     }
   }
 
-  public findById(productId: string):Observable<ProductDetail> {
-    return this.http.get<ProductDetail>(`${environment.server}/product/${productId}`, {headers: this.getHeader()})
-      .pipe(map<any,ProductDetail>(res => res), catchError(this.errorHandler));
+  public findById(productId: string):Observable<Product> {
+    return this.http.get<ProductDetail>(`${environment.server}/productadministration/${productId}`, {headers: this.getAuthHeader()})
+      .pipe(map<any,Product>(res => res), catchError(this.errorHandler));
   }
 
   delete(productId: string): Observable<any>{
@@ -75,5 +74,4 @@ export class ProductService {
     return this.http.post<ProductForCreation>(`${environment.server}/productadministration`, productForCreation,{headers: this.getAuthHeader()})
       .pipe(map<any,any>(res => res))
   }
-
 }

@@ -18,9 +18,6 @@ import { DatepickerModule} from "ng2-datepicker";
 import { CartStatisticsComponent } from './charts/cart-statistics/cart-statistics.component';
 import { DiscountformComponent } from './forms/discountform/discountform.component';
 import { DiscountListComponent } from './discount-list/discount-list.component';
-import { SearchComponent } from './search/search.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ProductformComponent } from './forms/productform/productform.component';
 import { RedirectComponent } from './redirect/redirect.component';
 
 
@@ -36,9 +33,6 @@ import { RedirectComponent } from './redirect/redirect.component';
     CartStatisticsComponent,
     DiscountformComponent,
     DiscountListComponent,
-    SearchComponent,
-    ProductListComponent,
-    ProductformComponent,
     RedirectComponent
   ],
   imports: [

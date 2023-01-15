@@ -8,7 +8,7 @@ import {
   TimeWindowRuleSetting, MinProductCountRuleSetting,
 } from "./DiscountSettingPlaceholders";
 import {DiscountSetting} from "../../models/discount/discountSettings";
-import {DiscountService} from "../../discount.service";
+import {DiscountService} from "../../shared/discount.service";
 import {NgToastService} from "ng-angular-popup";
 import {ActivatedRoute, Router} from "@angular/router";
 

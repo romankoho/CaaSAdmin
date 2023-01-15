@@ -3,4 +3,6 @@ export interface ProductForCreation {
   name?: string,
   description?: string,
   price: number
+  downloadLink: string,
+  imageSrc: string
 }

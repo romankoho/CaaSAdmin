@@ -17,6 +17,7 @@ export class CartStatisticsComponent implements OnInit {
   }
 
   cartChart: Chart
+
   fromDate: Date = new Date()
   untilDate: Date = new Date()
 
@@ -36,6 +37,7 @@ export class CartStatisticsComponent implements OnInit {
   }
 
   createChart() {
+
     if (this.cartChart) this.cartChart.destroy();
 
     this.cartChart = new Chart("cartStatistics", {
