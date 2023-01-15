@@ -1,0 +1,37 @@
+﻿:author: Roman Kofler-Hofer
+:listing-caption: Code-Auszug
+:source-highlighter: rouge
+// path to the directory containing the source code
+:src: ../app/src/main
+// path to the directory containing the images
+:imagesdir: ./images
+:toc:
+:numbered:
+:toclevels: 3
+:rouge-style: github
+:pdf-themesdir: ./theme
+:pdf-theme: basic
+:pdf-fontsdir: ./fonts
+// front-cover-image can be used to include the Exercise specification, for example:
+:front-cover-image: cover.pdf
+
+= CaaS - Ausbaustufe 3
+
+== Lösungsidee
+Ziel dieser Ausarbeitung war es, auf Basis der zur Verfügung gestellten REST-Schnittstelle ein Frontend zu entwickeln, das zumindest die Mindestanforderungen erfüllt.
+
+Ich habe mich dazu entschieden zwei Anwendungen zu bauen. Eine für einen Shop (CaaS.Shop) und eine zweite (komplett abgekoppelte) für die Verwaltung von Shops (CaaS.Admin). CaaS.Shop kann beim Start so konfiguriert werden, dass Daten für einen anderen Shop angezeigt werden.
+
+Für die Umsetzung des UIs wurde Bootstrap 5 verwendet. Für die Authentifizierung in Caas.Admin wurde KeyCloak verwendet.
+
+.Projektstruktur
+image::appStructure.png[width=400]
+
+== Caas.Admin
+
+
+
+
+
+
+
