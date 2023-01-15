@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, catchError, map, Observable, of} from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, of, Subject} from "rxjs";
 import {Shop} from "../models/shop/shop";
 import {environment} from "../../environments/environment";
 import {ShopForUpdate} from "../models/shop/shopForUpdate";
@@ -34,20 +34,31 @@ export class ShopService {
       })
   }
 
-  updateShop(shopId: string, updatedShop: ShopForUpdate){
+  updateShop(shopId: string, updatedShop: ShopForUpdate): Observable<boolean> {
+    let subject = new Subject<boolean>();
+    this.updateShopRestCall(shopId, updatedShop).subscribe({
+      next:(shopFromBackend) => {
+        let updatedShop: Shop = {
+          ...shopFromBackend
+        }
+        sessionStorage.setItem("appKey", shopFromBackend.appKey || "");
+        this.shop.next(updatedShop);
+        subject.next(true)
+      },
+      error:(e) => {
+        subject.next(false)
+      }
+    })
+    return subject.asObservable()
+  }
+
+  private updateShopRestCall(shopId: string, updatedShop: ShopForUpdate): Observable<Shop> {
     let header = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     })
 
-    this.http.put<ShopForUpdate>(`${environment.server}/shopadministration/${shopId}`, updatedShop, {headers: header})
-      .pipe(map<any, Shop>(res => res)).subscribe(shopFromBackend => {
-          let updatedShop: Shop = {
-            ...shopFromBackend
-          }
-
-          this.shop.next(updatedShop)
-        }
-      )
+    return this.http.put<ShopForUpdate>(`${environment.server}/shopadministration/${shopId}`, updatedShop, {headers: header})
+      .pipe(map<any, Shop>(res => res))
   }
 }

@@ -31,7 +31,7 @@ export class OrderStatisticsComponent implements OnInit {
   dataSeriesOne: number[] = []
   dataSeriesTwo: number[] = []
   dataSeriesOneLabel: string = 'Select data'
-  dataSeriesTwoLabel: string = ''
+  dataSeriesTwoLabel: string = 'Select data'
 
   ngOnInit(): void {
     let newDate = this.fromDate.setDate(this.fromDate.getDate()-60)
@@ -50,27 +50,14 @@ export class OrderStatisticsComponent implements OnInit {
           {
             data: this.dataSeriesOne,
             label: this.dataSeriesOneLabel,
-            backgroundColor: '#f88406',
-            datalabels: {
-              color: '#000000',
-              anchor: 'end',
-              clamp: true,
-              align: 'end'
-            }
+            backgroundColor: '#f88406'
           },
           {
             data: this.dataSeriesTwo,
             label: this.dataSeriesTwoLabel,
-            backgroundColor: '#0143ad',
-            datalabels: {
-              color: '#000000',
-              anchor: 'end',
-              clamp: true,
-              align: 'end'
-            }
+            backgroundColor: '#0143ad'
           }]
-      },
-      plugins: [ChartDataLabels]
+      }
     })
 
     if (this.display !== 'revenue' && this.display !== 'avgRevenue') {
@@ -78,6 +65,7 @@ export class OrderStatisticsComponent implements OnInit {
       this.orderChart.update()
     }
   }
+
 
   prepareData(){
     this.dataLabels = []
@@ -88,12 +76,11 @@ export class OrderStatisticsComponent implements OnInit {
     for(const item of this.aggregatedResult) {
       if(i > 60) {
         this.toast.error({detail: "Too much data", summary:"Max. 60 datapoints are displayed", duration: 5000})
-        let newDate = this.fromDate.setDate(this.fromDate.getDate()+60)
-        this.untilDate = new Date(newDate)
+        this.untilDate = new Date(this.fromDate)
+        this.untilDate.setDate(this.fromDate.getDate()+60)
         break
       }
       i++
-
 
       this.dataLabels.push(item.date.slice(0,10))
 

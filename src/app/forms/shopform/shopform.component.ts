@@ -5,6 +5,7 @@ import {ShopFormErrorMessages} from "./shopFormMessages";
 import {Shop} from "../../models/shop/shop";
 import {ShopForUpdate} from "../../models/shop/shopForUpdate";
 import {ShopService} from "../../shared/shop.service";
+import {NgToastService} from "ng-angular-popup";
 
 @Component({
   selector: 'wea5-shopform',
@@ -12,7 +13,7 @@ import {ShopService} from "../../shared/shop.service";
   styles: [
   ]
 })
-export class ShopformComponent implements OnInit, OnChanges {
+export class ShopformComponent implements OnInit {
 
   shopDetailsForm!: FormGroup;
   errors: { [key: string]: string } = {};
@@ -27,22 +28,10 @@ export class ShopformComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    for(const propName in changes) {
-      if(changes.hasOwnProperty(propName)) {
-        switch (propName) {
-          case 'shop' : {
-            this.shop = changes["shop"].currentValue
-            this.initForm()
-          }
-        }
-      }
-    }
-  }
-
   constructor(private fb: FormBuilder,
               private router: Router,
-              private shopService: ShopService) { }
+              private shopService: ShopService,
+              private toast: NgToastService) { }
 
   ngOnInit(): void {
     this.shopService.cast.subscribe(res => {
@@ -105,7 +94,13 @@ export class ShopformComponent implements OnInit, OnChanges {
       concurrencyToken: this.shop.concurrencyToken,
     }
 
-    this.shopService.updateShop(this.shop.id, shopForUpdate)
-    this.editing = false
+    this.shopService.updateShop(this.shop.id, shopForUpdate).subscribe({
+      next:(result) => {
+        if (result == true) {
+          this.toast.success({detail: "Shop Updated!", duration:5000})
+          this.editing = false
+        }
+      }
+    })
   }
 }

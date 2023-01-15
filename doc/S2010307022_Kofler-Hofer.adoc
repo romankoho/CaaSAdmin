@@ -29,7 +29,35 @@ image::appStructure.png[width=400]
 
 == Caas.Admin
 
+=== Architekur
 
+Caas.Admin besteht aus verschiedenen Komopnenten. Die Grafik Caas.Admin Struktur gibt einen schematischen Überblick über den Aufbau. Ohne Login erreichbar ist die Login-Seite (gleichzusetzen mit einer Hero-Page bzw. Startseite). Eine Redirect Komponente ist ebenfalls ohne Login zu erreichen. Der Login-Prozess wird im Anschluss im Detail beschrieben.
+
+Hinter dem Login hat der User Zugriff auf die einzelnen Bereiche des Admin-Tools und kann hier den zugeordneten Shop verwalten. Dazu werden von der Applikation Services zur Verfügung gestellt welche den Zugriff auf die API erlauben. Die models sind Abbilder der ViewModels der API. Diese dienen der typisierten Programmierung in Angular. Die Services verwenden die Models und retournieren auch bestimmte Models an die aufrufenden Komponenten.
+
+Auf der Home-Komponente werden dem User die Shop-Infos angezeigt. Diese können auch direkt dort verändert werden. Dazu bindet die Home-Komponente eine Kind-Komponente namens shop-form ein.
+
+Discounts werden in einer Liste angezeigt (discount-list). Von hier aus gelangt man auf die discount-form Komponente welche es erlaubt einen neuen Discount anzulegen bzw. einen bestehenden zu ändern.
+
+Die beiden chart-Komponenten (cart und order statistics) dienen zur Anzeige von Statistiken des Shops. Zur Auswahl des Auswertungszeitraums haben beide Komponenten die Kind-Komponente datepicker eingebunden.
+
+Die Komponente navbar wird in sämtlichen HTML templates der einzelnen Komponenten angezeigt und dient der Navigation zwischen den einzelnen Seiten.
+
+.Caas.Admin Struktur
+image::admin_structure.png[width=500]
+
+=== Login
+
+Die index.html Seite leitet auf die Login-Komponente weiter. Von dort kann man den Login mittels KeyCloak triggern. In KeyCloak wurden die beiden CaaS-Admin-User angelegt. Außerdem wurde dort ein zusätzliches Attribut namens caasId gespeichert. Dieses entspricht der id des Admins aus dem Backend. Als redirectUri wurde in der authConfig die redirect-Komponente angegeben. Das Attribut caasId wird beim Login neben dem access token und id token ebenfalls in den Session Storage gespeichert. Die einzige Aufgabe der redirect-Komponente ist es, auf die home-Komponente weiterzuleiten. Vor dieser ist ein Guard, welcher überprüft, ob der User eingeloggt ist.
+
+Warum habe ich nicht direkt auf die home-Komponente geleitet (redirectUri) und mir die redirect-Komponente gespart? Das war der ursprüngliche Plan, allerdings hat KeyCloak in diesem Fall den access_token, id_token, caasId etc. nicht in den Session Storage gespeichert. Ich glaub, es lag daran, dass in diesem Fall die redirect Uri durch einen Guard geschützt war.
+
+In der Home-Komponente steht der shopService bereit. Das Backend bietet eine Möglichkeit einen Shop für eine bestimmte Admin-Id zu erhalten. In diesem Shop Element ist auch der API-Key sowie die Tenant-Id des Shops gespeichert. Diese Daten werden für sämtliche API-calls benötigt, welche Administratorenrechte benötigen. Beide Daten werden in den Session-Storage gespeichert und stehen ab nun allen Services zur Verfügung.
+
+.Ablauf Login
+image::login.png[width=500]
+
+=== Benutzerschnittstelle
 
 
 
