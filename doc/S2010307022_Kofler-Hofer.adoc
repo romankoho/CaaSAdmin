@@ -13,9 +13,11 @@
 :pdf-theme: basic
 :pdf-fontsdir: ./fonts
 // front-cover-image can be used to include the Exercise specification, for example:
-:front-cover-image: cover.pdf
+//:front-cover-image:
 
 = CaaS - Ausbaustufe 3
+
+<<<
 
 == Lösungsidee
 Ziel dieser Ausarbeitung war es, auf Basis der zur Verfügung gestellten REST-Schnittstelle ein Frontend zu entwickeln, das zumindest die Mindestanforderungen erfüllt.
@@ -25,7 +27,9 @@ Ich habe mich dazu entschieden zwei Anwendungen zu bauen. Eine für einen Shop (
 Für die Umsetzung des UIs wurde Bootstrap 5 verwendet. Für die Authentifizierung in Caas.Admin wurde KeyCloak verwendet.
 
 .Projektstruktur
-image::appStructure.png[width=400]
+image::appStructure.png[width=600]
+
+<<<
 
 == Caas.Admin
 
@@ -44,7 +48,7 @@ Die beiden chart-Komponenten (cart und order statistics) dienen zur Anzeige von 
 Die Komponente navbar wird in sämtlichen HTML templates der einzelnen Komponenten angezeigt und dient der Navigation zwischen den einzelnen Seiten.
 
 .Caas.Admin Struktur
-image::admin_structure.png[width=500]
+image::admin_structure.png[width=600]
 
 === Login
 
@@ -55,11 +59,111 @@ Warum habe ich nicht direkt auf die home-Komponente geleitet (redirectUri) und m
 In der Home-Komponente steht der shopService bereit. Das Backend bietet eine Möglichkeit einen Shop für eine bestimmte Admin-Id zu erhalten. In diesem Shop Element ist auch der API-Key sowie die Tenant-Id des Shops gespeichert. Diese Daten werden für sämtliche API-calls benötigt, welche Administratorenrechte benötigen. Beide Daten werden in den Session-Storage gespeichert und stehen ab nun allen Services zur Verfügung.
 
 .Ablauf Login
-image::login.png[width=500]
+image::login.png[width=600]
+
+<<<
 
 === Benutzerschnittstelle
 
+.Login Komponente
+image::admin/login.png[width=700]
+
+Die Login Komponente dient als Hero-Page. Von hier aus kann der Login gestartet werden.
+
+.Redirect Komponente
+image::admin/redirect.png[width=600]
+
+Bevor zur Home-Komponente geleitet wird, muss der User über die Redirect-Komponente geleitet werden (dauert 2 Sekunden).
+
+.Home Komponente
+image::admin/home.png[width=700]
+
+Die Home Komponente zeigt die Shopdetails an. Durch die eingebundene Komponente "Shop-Form" kann der Shop upgedatet werden
+
+.Home Komponente - editieren aktiviert
+image::admin/home_edit.png[width=700]
+
+Das Editieren des Shops kann gespeichert oder abgebrochen werden
+
+.Discount-list Komponente
+image::admin/discount_list.png[width=700]
+
+In der Discount-List werden die verschiedenen Discounts aufgelistet. Von hier aus kann der User diese bearbeiten, neu anlegen oder löschen. Die Regeln und Aktionen sind individuell. Es wurde kein dynamisches Formular verwendet. Stattdessen werden die Parameter der Regeln und Aktionen nur als JSON angezeigt.
+
+.Discount-form Komponente
+image::admin/edit_existing_discount.png[width=700]
+
+In dieser Komponente kann ein Discount editiert werden. Diese Komponente wird auch geöffnet, wenn der User einen neuen Discount anlegen möchte. Dann werden in das Formular jedoch nur Platzhalter eingefügt.
+
+.cart- und order-statistics Komponente
+image::admin/orderstatistics.png[width=700]
+
+Die Charts wurden mittels chartjs erstellt. Die beiden Komponenten für Cart und Orderstatistics sind sehr ähnlich. Das Backend unterstützt die Auswahl eines Aggregationslevels (Tag, Monat, Jahr). Außerdem können verschiedene Statistiken angezeigt werden (z.B. Anzahl an Bestellungen, summierter Wert der Bestellungen, usw.). Der User kann für die Auswertung einen Zeitraum eingeben. Es werden jedoch maximal 60 Datenpunkte dargstellt, da die Balken ansonsten zu klein werden (kein endloses Anwachsen der X-Achse).
+
+<<<
+
+== Caas.Shop
+
+=== Architekur
+
+Der Shop ist eine eigenständige Applikation, hat aber natürlich einige Gemeinsamkeiten mit der Admin-App. So sind die Services natürlich ähnlich aufgebaut und auch die view-models sind Großteils ident.
+
+Die Home-Komponente soll die Startseite von einem Online-Shop simulieren. Zu finden sind darauf grafische Elemente ohne Funktionalität. Über die Komponente product-list kann man Produkte zu einem Warenkorb hinzufügen. Die Kind-Komponente search liefert zu Suchanfragen passende Ergebnisse vom Backend. Die Ergebnisse werden "paginated" dargestellt. Neue Ergebnisse werden nicht während dem Tippen geliefert, sondern erst, wenn der User "search" klickt. Das wurde  gemacht, um das Backend zu entlasten. Die Komponente product-detail dient dazu, um Details eines Produktes anzuzeigen. Außerdem kann das Produkt auch zum Warenkorb hinzugefügt werden.
+
+Die Cart-Komponente beinhaltet cart-entry-Komponenten für jedes Item in einem Warenkorb. Mit einem gültigen Warenkorb (alle Items haben eine Menge von > 0) kann man zum Checkout navigieren. Im Checkout muss der User seine Daten angeben. Sofern die Zahlung erfolgreich ist (managed das Backend), wird die Bestellung erfolgreich abgeschickt und der User wird zur Startseite weitergeleitet. Mit einem Toast wird die Bestellnummer angezeigt.
+
+In der Shop-Applikation gibt es keinen User-Login. Shops werden durch den Local Storage persistiert. Wenn auf die Cart-Komponente gewechselt wird, wird zuerst im Local Storage nachgesehen, ob ein Cart existiert. Falls das der Fall ist, wird vom Server ein Update des Carts geholt. Ansonsten wird ein leerer Cart angezeigt.
+
+.Caas.Shop Struktur
+image::shop_structure.png[width=700]
+
+Bei allen Aktionen die den Cart betreffen wird zuerst in den LocalStorage gesehen, um zu checken, ob es bereits einen Warenkorb gibt oder nicht. Die Grafik unterhalb beschreibt den Ablauf beim Hinzufügen eines Produkts zum Cart.
+
+Wenn addToCart(productId) aufgerufen wird, muss zuerst im LocalStorage der aktuelle Cart geholt werden. Falls einer gefunden wird, wird aus dem Cart das gewählte Produkt (über die übergebene id) gesucht. Falls ein Produkt gefunden wird, wird der Count erhöht. Ansonsten wird ein neues Item zum Cart hinzugefügt. Wenn im Local Storage kein Cart gefunden wird, wird eine neuer mit dem einen hinzugefügten Item initialisiert. Mit diesem Cart ruft der CartService nun updateCart auf, was ein Update am Server auslöst. Der retournierte Cart wird bis zur Product-List weitergegeben. Diese zeigt bei erfolgreichem Hinzufügen einen Toast an und updated den im LocalStorage gespeicherten Cart (es wäre möglich, dass sich anwendbare Discounts geändert haben).
+
+.Ablauf Produkt zu Cart hinzufügen
+image::addToCart.png[width=600]
+
+<<<
+
+=== Benutzerschnittstelle
+
+.Startseite
+image::shop/home.png[width=700]
+
+Die Startseite soll an eine E-Commerce Seite erinnen, hat ansonsten aber keine Funktion.
+
+.Produktsuche
+image::shop/product_search.png[width=700]
+
+In der product-list-Komponente kann nach Produkten gesucht werden. Die Bilder sind Platzhalter. Über den Titel des Produkts kommt man zur Detailseite. Außerdem kann ein Produkt zum Warenkorb hinzugefügt werden. Die Suchergebnisse sind auf einzelne Seiten aufgeteilt.
+
+.Detailseite
+image::shop/product_details.png[width=700]
+
+Auch über die Detailseite können Produkte zum Cart hinzugefügt werden
+
+.Cart
+image::shop/cart.png[width=700]
+
+Im Cart sieht dier User alleine seine Produkte. Außerdem können hier Gutscheine hinzugefügt werden. Die Zusammenfassung der Bestellung mit Basispreis, Abzüge und Endsumme wird dem User auch angezeigt.
+
+.Checkout
+image::shop/checkout.png[width=700]
+
+Auf der Checkout-Seite muss der User seine Daten eingeben. Die Felder werden natürlich validiert. Sobald alle Daten eingegeben wurden, kann der Checkout abgeschlossen werden
+
+.Checkout erfolgreich
+image::shop/successful_order.png[width=700]
+
+Nach dem Checkout wird der User auf die Startseite zurückgeleitet. Die Bestellnummer wird mit einem Toast angezeigt.
+
+.Übersetzungen
+image::shop/translations.png[width=700]
+
+Für die Shopkomponente wurden Übersetzungen hinzugefügt. Allerdings nur in HTML Komponenten. Texte, die in den .ts Files definiert wurden, werden nicht übersetzt. Hier hatte ich in der Umsetzung ein Problem, das ich bis zum Schluss nicht lösen konnte.
 
 
+== Installation
 
-
+Mit ng build kann die Applikation gebaut werden. Der Output-Ordner (dist/CaaSShop bzw. dist/CaaSAdmin) kann dann auf einen Webserver geladen werden.

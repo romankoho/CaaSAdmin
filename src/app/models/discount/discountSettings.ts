@@ -31,7 +31,7 @@ export interface  FixedValueDiscountSettings extends  DiscountParameters {
 }
 
 export interface  PercentageDiscountSettings extends  DiscountParameters {
-  value: number
+  percentage: number
 }
 
 export interface MinProductCountSettings extends  DiscountParameters {

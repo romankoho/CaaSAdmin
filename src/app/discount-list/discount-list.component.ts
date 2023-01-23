@@ -48,8 +48,11 @@ export class DiscountListComponent implements OnInit {
   }
 
   delete(id: string) {
-    this.discountService.getAll().subscribe((res) => {
-      this.discounts = res
+    this.discountService.delete(id).subscribe({
+      next:(res) => {
+        console.log("it was deleted")
+        this.discounts = this.discounts.filter(s => s.id !== id)
+      }
     })
   }
 }

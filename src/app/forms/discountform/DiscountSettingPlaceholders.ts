@@ -22,7 +22,7 @@ export const MinProductCountRuleSetting: MinProductCountSettings = {
 export const PercentageDiscountActionSettings: PercentageDiscountSettings = {
   version: 0,
   name: "small percentage discount",
-  value: 0.03
+  percentage: 0.03
 }
 
 export const FixedValueDiscountActionSettings: FixedValueDiscountSettings = {
